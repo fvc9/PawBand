@@ -1,0 +1,10 @@
+{
+  "description": "Ayuda a dueños de perros a monitorear actividad y estrés, con alertas puntuales sobre comportamientos inusuales para cuidar a sus mascotas sin revisar cámaras.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
