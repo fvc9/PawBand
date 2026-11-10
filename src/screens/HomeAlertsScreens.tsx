@@ -11,6 +11,7 @@ import {
   MessageCircle,
   MoreHorizontal,
   Sparkles,
+  PawPrint,
 } from 'lucide-react'
 import { getDogState } from '../domain/alertEngine'
 import { alertTypeConfig, formatDuration, formatTime } from '../domain/presentation'
@@ -35,7 +36,7 @@ function chartData(readings: ReturnType<typeof usePawBandStore>['readings']) {
 
 function SimpleLineChart({
   values,
-  color = '#3FA796',
+  color = 'var(--paw-accent)',
 }: {
   values: number[]
   color?: string
@@ -74,8 +75,10 @@ function Metric({
   )
 }
 
+function PawAction({label,onClick}:{label:string;onClick:()=>void}) { return <button className="paw-action" onClick={onClick}><svg viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="32" cy="39" rx="15" ry="12"/><circle cx="14" cy="21" r="7"/><circle cx="27" cy="13" r="7"/><circle cx="40" cy="13" r="7"/><circle cx="52" cy="22" r="7"/></svg><PawPrint size={17}/><span>{label}</span></button> }
+
 export function HomeScreen() {
-  const { dog, collar, readings, alerts, openAlert } = usePawBandStore()
+  const { dog, collar, readings, alerts, openAlert, muteForHour, setActiveTab } = usePawBandStore()
   const current = readings.at(-1) ?? {
     stressIndex: 0,
     activity: 0,
@@ -101,6 +104,7 @@ export function HomeScreen() {
       </div>
 
       <section className="hero-status">
+        <div className="home-greeting">Hola, Federico <span className="dog-avatar">🐕</span></div>
         <StatusRing value={current.stressIndex} severity={state} label="índice de estrés" />
         <p>
           {state === 'tranquilo'
@@ -111,6 +115,11 @@ export function HomeScreen() {
         </p>
       </section>
 
+      <section className="quick-paws" aria-label="Acciones rápidas">
+        <PawAction label="Silenciar 1 h" onClick={muteForHour} />
+        <PawAction label="Avisar a mi contacto" onClick={() => setActiveTab('ajustes')} />
+        <PawAction label="Ver alertas" onClick={() => setActiveTab('alertas')} />
+      </section>
       <section className="metrics-row" aria-label="Resumen actual">
         <Metric icon={Activity} value={`${current.activity}%`} label="actividad" />
         <Metric icon={Clock3} value="4 h 32" label="sola hoy" />
@@ -306,7 +315,7 @@ export function AlertDetailScreen() {
         <div className="detail-chart">
           <SimpleLineChart
             values={eventData.map((reading) => reading.activity)}
-            color="#E5484D"
+            color="var(--color-alert)"
           />
         </div>
       </Card>

@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { aplicarTema } from './theme'
 import { lazy, Suspense } from 'react'
 import { PawPrint, WifiOff } from 'lucide-react'
 import { BottomNav } from './components/BottomNav'
@@ -69,6 +71,7 @@ function ScreenSkeleton() {
 }
 
 function PawBandApp() {
+  useEffect(() => { try { const p=JSON.parse(localStorage.getItem('pawband_ui')||'{}'); aplicarTema(p.primary||'#ECB948',p.theme||'Miel') } catch { aplicarTema('#ECB948') } }, [])
   const { phase } = usePawBandStore()
   if (phase === 'app') return <MainApp />
 

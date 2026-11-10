@@ -1,3 +1,4 @@
+import { Personalize } from '../components/Personalize'
 import {
   BatteryMedium,
   Bell,
@@ -90,19 +91,19 @@ export function TrendsScreen() {
               <Line
                 type="monotone"
                 dataKey="activity"
-                stroke="#3FA796"
+                stroke="var(--paw-accent)"
                 strokeWidth={2}
                 dot={false}
               />
-              <Line type="monotone" dataKey="stress" stroke="#2F5BFF" strokeWidth={2} dot={false} />
+              <Line type="monotone" dataKey="stress" stroke="var(--paw-secondary)" strokeWidth={2} dot={false} />
               {peaks.slice(0, 3).map((peak, index) => (
                 <ReferenceDot
                   key={`${peak.time}-${index}`}
                   x={peak.time}
                   y={peak.stress}
                   r={4}
-                  fill="#E5484D"
-                  stroke="#FFFFFF"
+                  fill="var(--color-alert)"
+                  stroke="var(--paw-surface)"
                 />
               ))}
             </LineChart>
@@ -151,6 +152,7 @@ export function SettingsScreen() {
         </span>
       </Card>
 
+      <Personalize />
       <section className="settings-group">
         <p className="group-label">Preferencias</p>
         <Card className="list-card">
